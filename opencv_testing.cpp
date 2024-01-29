@@ -1,7 +1,5 @@
 #include <iostream>
 #include <opencv2/opencv.hpp>
-// #include <opencv2/core.hpp>
-// #include <opencv2/highgui.hpp>
 
 cv::Mat read_image(std::string path, int read_type){
     cv::Mat img = cv::imread(path, read_type);
@@ -61,11 +59,12 @@ int main(){
 
     //Display all the images that we've created
     // cv::imshow("Original", img);
-    // cv::imshow("Cropped", crop);
+    // std::cout << img.at<cv::Vec3b>(img.rows / 2.0, img.cols / 2.0) << std::endl;
+    cv::imshow("Cropped", crop);
     // cv::imshow("Convol: Identity", identity);
     // cv::imshow("Convol: Box Blur", box_blur);
     // cv::imshow("Scaled Down", downsized);
-    cv::imshow("Thresholding", thresholded);
+    // cv::imshow("Thresholding", thresholded);
     int k = cv::waitKey(0);
     cv::destroyAllWindows();
     return 0;
