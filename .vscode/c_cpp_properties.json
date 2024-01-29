@@ -4,8 +4,7 @@
             "name": "Win32",
             "includePath": [
                 "${workspaceFolder}/**",
-                "C:/Users/Ivy/Documents/Programming/C++/Lib/opencv2",
-                "C:/Users/Ivy/Documents/Programming/C++/Lib"
+                "C:\\OpenCV-MinGW-Build\\include"
             ],
             "defines": [
                 "_DEBUG",
@@ -13,10 +12,11 @@
                 "_UNICODE"
             ],
             "windowsSdkVersion": "10.0.20348.0",
-            "compilerPath": "C:/msys64/ucrt64/bin/g++.exe",
+            "compilerPath": "cl.exe",
             "cStandard": "c17",
             "cppStandard": "c++17",
-            "intelliSenseMode": "windows-gcc-x64"
+            "intelliSenseMode": "windows-msvc-x64",
+            "configurationProvider": "ms-vscode.cmake-tools"
         }
     ],
     "version": 4
