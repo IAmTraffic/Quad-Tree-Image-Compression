@@ -160,11 +160,33 @@ class QuadTree {
 				h_e_n->add_child(QuadNode(img, original_img, cv::Rect2d(h_e_n->rect.x + h_e_n->rect.width / 2, h_e_n->rect.y + h_e_n->rect.height / 2, h_e_n->rect.width / 2, h_e_n->rect.height / 2)));	
 			}
 		}
+
+		//Outlines each quad (optional)
+		void draw_outlines(){
+			int color_bw = 20;
+			cv::Scalar color = cv::Scalar(color_bw, color_bw, color_bw);
+			int thickness = 1;
+			std::vector<QuadNode *> frontier = {&root};
+			while(frontier.size() > 0){
+				QuadNode *next = frontier[frontier.size() - 1];
+				frontier.pop_back();
+				if(next->is_leaf()){
+					cv::line(img, cv::Point(next->rect.x, next->rect.y), cv::Point(next->rect.x, next->rect.y + next->rect.height), color, thickness);
+					cv::line(img, cv::Point(next->rect.x, next->rect.y), cv::Point(next->rect.x + next->rect.width, next->rect.y), color, thickness);
+					// cv::line(img, cv::Point(next->rect.x + next->rect.width, next->rect.y), cv::Point(next->rect.x + next->rect.width, next->rect.y + next->rect.height), color, thickness);
+				}else{
+					for(int i = 0; i < next->children.size(); i++){
+						frontier.push_back(&next->children[i]);
+					}
+				}
+			}
+			// cv::line(img, cv::Point(100, 100), cv::Point(500, 500), cv::Scalar(255, 255, 0), 10);
+		}
 };
 
 int main(){
 	//Open the image in OpenCV and resize it to fit my monitor with room to spare
-	cv::Mat img = cv::imread("C:\\Users\\Ivy\\Documents\\Programming\\C++\\Quad Tree Image Compression\\nature-8339115_1280.jpg", cv::IMREAD_COLOR);
+	cv::Mat img = cv::imread("C:\\Users\\Ivy\\Documents\\Programming\\C++\\Quad Tree Image Compression\\boat-8515980_1280.jpg", cv::IMREAD_COLOR);
 	float image_dest_height = 600.0;
 	cv::resize(img, img, cv::Size(), image_dest_height / img.size[0], image_dest_height / img.size[0]);	
 
@@ -173,6 +195,9 @@ int main(){
 
 	//Split the image up a number of times
 	quad_tree.iterate(500);
+
+	//Draw the outlines of the quads (optional)
+	quad_tree.draw_outlines();
 
 	//Display the quad-compressed image
 	cv::imshow("", img);
